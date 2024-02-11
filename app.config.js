@@ -152,6 +152,7 @@ module.exports = function () {
           },
         ],
         './plugins/withAndroidManifestPlugin.js',
+        './plugins/codepush/withCodePush.js',
       ].filter(Boolean),
       extra: {
         eas: {
