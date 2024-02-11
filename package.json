@@ -44,7 +44,8 @@
     "codepush:release": "npx appcenter-cli codepush release-react -a blueskysocial/Bluesky --plist-file ./ios/Bluesky/Info.plist -d",
     "codepush:promote": "npx appcenter-cli codepush promote -a blueskysocial/Bluesky -s Staging -d Production",
     "codepush:rollback": "npx appcenter-cli codepush rollback -a blueskysocial/Bluesky",
-    "codepush:list-releases": "npx appcenter-cli codepush deployment history -a blueskysocial/Bluesky"
+    "codepush:list-releases": "npx appcenter-cli codepush deployment history -a blueskysocial/Bluesky",
+    "codepush:list-keys": "npx appcenter-cli codepush deployment list -a blueskysocial/Bluesky -k"
   },
   "dependencies": {
     "@atproto/api": "^0.9.5",

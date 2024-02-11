@@ -1,20 +1,21 @@
 import 'react-native-url-polyfill/auto'
 import 'lib/sentry' // must be near top
-
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {RootSiblingParent} from 'react-native-root-siblings'
 import * as SplashScreen from 'expo-splash-screen'
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {QueryClientProvider} from '@tanstack/react-query'
 import {
-  SafeAreaProvider,
   initialWindowMetrics,
+  SafeAreaProvider,
 } from 'react-native-safe-area-context'
-
+import codePush from 'react-native-code-push'
+import CodePush, {CodePushOptions} from 'react-native-code-push'
 import 'view/icons'
 
 import {ThemeProvider as Alf} from '#/alf'
 import {useColorModeTheme} from '#/alf/util/useColorModeTheme'
+import * as persisted from '#/state/persisted'
 import {init as initPersistedState} from '#/state/persisted'
 import {listenSessionDropped} from './state/events'
 import {ThemeProvider} from 'lib/ThemeContext'
@@ -40,11 +41,28 @@ import {
   useSessionApi,
 } from 'state/session'
 import {Provider as UnreadNotifsProvider} from 'state/queries/notifications/unread'
-import * as persisted from '#/state/persisted'
 import {Splash} from '#/Splash'
 import {Provider as PortalProvider} from '#/components/Portal'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
+
+const CODEPUSH_ENV = process.env.EXPO_PUBLIC_CODEPUSH_ENV
+const CODEPUSH_PRODUCTION_KEY = process.env.EXPO_PUBLIC_CODEPUSH_PRODUCTION_KEY
+const CODEPUSH_STAGING_KEY = process.env.EXPO_PUBLIC_CODEPUSH_STAGING_KEY
+const isProduction = CODEPUSH_ENV === 'production'
+
+const codePushOptions: CodePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  rollbackRetryOptions: {
+    delayInHours: isProduction ? 2 : 0,
+    maxRetryAttempts: isProduction ? 10 : 1000,
+  },
+  minimumBackgroundDuration: 60 * 60 * 1000, // Only check every hour
+  deploymentKey: isProduction ? CODEPUSH_PRODUCTION_KEY : CODEPUSH_STAGING_KEY,
+  mandatoryInstallMode: InstallMode.IMMEDIATE,
+}
+
+import InstallMode = CodePush.InstallMode
 
 SplashScreen.preventAutoHideAsync()
 
@@ -136,4 +154,4 @@ function App() {
   )
 }
 
-export default App
+export default codePush(codePushOptions)(App)
