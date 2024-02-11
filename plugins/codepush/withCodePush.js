@@ -12,6 +12,7 @@ const withCodePush = config => {
         deploymentKey: CODEPUSH_DEPLOYMENT_KEY,
       },
     ],
+    withAppDelegate,
   ])
 }
 
