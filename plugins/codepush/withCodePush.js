@@ -2,7 +2,7 @@ const {withPlugins} = require('@expo/config-plugins')
 const {withAppDelegate} = require('./withAppDelegate')
 const {withInfoPlist} = require('./withInfoPlist')
 
-const CODEPUSH_DEPLOYMENT_KEY = process.env.CODEPUSH_DEPLOYMENT_KEY
+const CODEPUSH_DEPLOYMENT_KEY = process.env.EXPO_PUBLIC_CODEPUSH_PRODUCTION_KEY
 
 const withCodePush = config => {
   return withPlugins(config, [
