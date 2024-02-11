@@ -39,7 +39,12 @@
     "nuke": "rm -rf ./node_modules && rm -rf ./ios && rm -rf ./android",
     "bump": "./scripts/bumpIosBuildNumber.sh && ./scripts/bumpAndroidBuildNumber.sh",
     "bump:ios": "./scripts/bumpIosBuildNumber.sh",
-    "bump:android": "./scripts/bumpAndroidBuildNumber.sh"
+    "bump:android": "./scripts/bumpAndroidBuildNumber.sh",
+    "codepush:login": "npx appcenter-cli login",
+    "codepush:release": "npx appcenter-cli codepush release-react -a blueskysocial/Bluesky --plist-file ./ios/Bluesky/Info.plist -d",
+    "codepush:promote": "npx appcenter-cli codepush promote -a blueskysocial/Bluesky -s Staging -d Production",
+    "codepush:rollback": "npx appcenter-cli codepush rollback -a blueskysocial/Bluesky",
+    "codepush:list-releases": "npx appcenter-cli codepush deployment history -a blueskysocial/Bluesky"
   },
   "dependencies": {
     "@atproto/api": "^0.9.5",
