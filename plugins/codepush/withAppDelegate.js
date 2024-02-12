@@ -27,22 +27,6 @@ const withAppDelegate = config => {
       'return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];',
       'return [CodePush bundleURL];',
     )
-    // Just keep this with the annoying formatting unless you really feel like fixing it, I am lazy.
-    config.modResults.contents = replaceDelegateString(
-      config.modResults.contents,
-      `- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
-{
-  return [self getBundleURL];
-}`,
-      `- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
-{
-  #if DEBUG
-    return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
-  #else
-    return [CodePush bundleURL];
-  #endif
-}`,
-    )
     return config
   })
 }
