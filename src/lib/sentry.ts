@@ -5,16 +5,12 @@
 
 import {Platform} from 'react-native'
 import app from 'react-native-version-number'
-import * as info from 'expo-updates'
 import {init} from 'sentry-expo'
 
 /**
  * Matches the build profile `channel` props in `eas.json`
  */
-const buildChannel = (info.channel || 'development') as
-  | 'development'
-  | 'preview'
-  | 'production'
+const buildChannel = 'development' as 'development' | 'preview' | 'production'
 
 /**
  * Examples:
